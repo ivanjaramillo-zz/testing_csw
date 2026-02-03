@@ -1,0 +1,8 @@
+/target/
+/backend/
+/primer_ms/
+*.jar
+*.key
+*.pem
+.idea/
+.vscode/

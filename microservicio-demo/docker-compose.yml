@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  microservicio-demo:
+    build: .
+    container_name: microservicio-demo
+    ports:
+      - "8081:8081"
+    networks:
+      - microservicio-demo_default
+
+networks:
+  microservicio-demo_default:
+    external: true
