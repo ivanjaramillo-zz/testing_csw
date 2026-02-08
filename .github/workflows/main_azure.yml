@@ -30,19 +30,19 @@ jobs:
 
 - name: 5. Build y Push de Imagen Docker
         run: |
-          echo "--- LISTANDO CONTENIDO DE LA RAÍZ ---"
-          ls -F
-          
-          echo "--- LISTANDO CONTENIDO DE MICROSERVICIO-DEMO ---"
-          ls -F microservicio-demo/
-          
-          echo "--- INTENTANDO CONSTRUIR ---"
-          # Entramos físicamente a la carpeta para evitar errores de ruta
           cd microservicio-demo
           
-          # Buscamos cualquier archivo que se parezca a un Dockerfile y lo renombramos por seguridad
-          mv [Dd]ockerfile* Dockerfile || true
+          # 1. Crear el Dockerfile manualmente para asegurar contenido y nombre
+          echo "FROM eclipse-temurin:17-jre-alpine" > Dockerfile
+          echo "WORKDIR /app" >> Dockerfile
+          echo "COPY target/*.jar app.jar" >> Dockerfile
+          echo "EXPOSE 8082" >> Dockerfile
+          echo "ENTRYPOINT [\"java\", \"-jar\", \"app.jar\"]" >> Dockerfile
           
+          # 2. Verificar que ahora sí tenga contenido (debe pesar más de 2B)
+          ls -lh Dockerfile
+          
+          # 3. Construir y Subir
           docker build -t ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest
 
