@@ -1,0 +1,36 @@
+name: Test Deploy a Azure
+
+on:
+  push:
+    branches: [ "main" ] # Se activa al subir cambios a main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Descargar código
+        uses: actions/checkout@v3
+
+      - name: 2. Login en Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 3. Construir e Identificar Imagen
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest
+
+      - name: 4. Desplegar en Azure vía SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AZURE_IP }}
+          username: azureuser # El usuario por defecto en Azure
+          key: ${{ secrets.AZURE_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest
+            docker stop microservicio_app || true
+            docker rm microservicio_app || true
+            docker run -d --name microservicio_app -p 80:8082 ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest
