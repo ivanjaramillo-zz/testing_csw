@@ -28,16 +28,22 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: 5. Build y Push de Imagen Docker
+- name: 5. Build y Push de Imagen Docker
         run: |
-          # 1. Diagnóstico: Listar archivos para ver si el nombre es Dockerfile o dockerfile
-          ls -R microservicio-demo
+          echo "--- LISTANDO CONTENIDO DE LA RAÍZ ---"
+          ls -F
           
-          # 2. Entrar a la carpeta y construir desde adentro
+          echo "--- LISTANDO CONTENIDO DE MICROSERVICIO-DEMO ---"
+          ls -F microservicio-demo/
+          
+          echo "--- INTENTANDO CONSTRUIR ---"
+          # Entramos físicamente a la carpeta para evitar errores de ruta
           cd microservicio-demo
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest .
           
-          # 3. Subir la imagen
+          # Buscamos cualquier archivo que se parezca a un Dockerfile y lo renombramos por seguridad
+          mv [Dd]ockerfile* Dockerfile || true
+          
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest
 
       - name: 6. Despliegue en Azure vía SSH
