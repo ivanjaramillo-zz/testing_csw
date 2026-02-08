@@ -30,7 +30,10 @@ jobs:
 
       - name: 5. Build y Push de Imagen Docker
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest .
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest \
+            -f ./microservicio-demo/Dockerfile \
+            ./microservicio-demo
           docker push ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest
 
       - name: 6. Despliegue en Azure vía SSH
