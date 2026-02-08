@@ -18,8 +18,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: 3. Compilar con Maven
+	- name: 3. Compilar con Maven
         run: mvn clean package -DskipTests
+        working-directory: ./microservicio-demo
 
       - name: 4. Login en Docker Hub
         uses: docker/login-action@v3
