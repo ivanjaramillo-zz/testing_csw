@@ -2,7 +2,7 @@ name: Deploy Microservice to Azure AKS
 
 on:
   push:
-    branches: [ "feature-kubernetes" ] # Activación exclusiva para esta rama
+    branches: [ "feature-kubernetes" ]
 
 jobs:
   build-and-deploy:
@@ -23,7 +23,7 @@ jobs:
       # 2. Construcción del binario (CI)
       - name: Compilar con Maven
         run: mvn clean package -DskipTests
-         working-directory: ./microservicio-demo # Ajuste a su ruta real
+        working-directory: ./microservicio-demo
 
       # 3. Gestión de Imágenes de Docker
       - name: Login en Docker Hub
@@ -43,7 +43,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} # Requiere un Service Principal
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Configurar contexto de AKS
         uses: azure/aks-set-context@v3
