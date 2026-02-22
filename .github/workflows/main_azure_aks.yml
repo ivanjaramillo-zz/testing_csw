@@ -60,6 +60,6 @@ jobs:
           manifests: |
             k8s/mysql-pvc.yaml
             k8s/mysql-deploy.yaml
-            k8s/ms-estudiante-deploy.yaml
+            k8s/microservicio-demo-deployment.yaml
           images: |
             ${{ secrets.ACR_LOGIN_SERVER }}/ijaramillo-msdemo:latest
