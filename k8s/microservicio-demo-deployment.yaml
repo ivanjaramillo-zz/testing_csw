@@ -12,9 +12,11 @@ spec:
       labels:
         app: microservicio-demo
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret1
       containers:
-      - name: ijaramillo-msdemo
-        image: ivanjarmillolobo/ijaramillo-msdemo:latest
+      - name: microservicio-demo
+        image: docker.io/ivanjarmillolobo/microservicio-demo:latest
         ports:
         - containerPort: 8082
         env:
