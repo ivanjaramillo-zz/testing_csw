@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: microservicio-demo
-        image: ${{ secrets.DOCKER_USERNAME }}/ijaramillo-msdemo:latest # GitHub Actions llenará esto
+        image: ivanjarmillolobo/ijaramillo-msdemo:latest
         ports:
         - containerPort: 8082
         env:
