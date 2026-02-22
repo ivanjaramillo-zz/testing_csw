@@ -37,7 +37,7 @@ jobs:
       # 5. Construir y subir la imagen a su registro privado en Azure
       - name: Build y Push de la imagen a ACR
         run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/ijaramillo-msdemo:latest .
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/ijaramillo-msdemo:latest ./microservicio-demo
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/ijaramillo-msdemo:latest
 
       # 6. Autenticación en Azure (para gestionar el clúster)
