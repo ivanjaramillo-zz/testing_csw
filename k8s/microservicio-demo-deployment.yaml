@@ -13,7 +13,7 @@ spec:
         app: microservicio-demo
     spec:
       containers:
-      - name: microservicio-demo
+      - name: ijaramillo-msdemo
         image: ivanjarmillolobo/ijaramillo-msdemo:latest
         ports:
         - containerPort: 8082
