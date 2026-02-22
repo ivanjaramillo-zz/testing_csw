@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: microservicio-demo
-        image: acrivancho.azurecr.io/microservicio-demo:latest
+        image: acrivancho.azurecr.io/ijaramillo-msdemo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8082
